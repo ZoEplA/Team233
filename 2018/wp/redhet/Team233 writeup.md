@@ -536,10 +536,13 @@ for o in range(1,9999):
     <img src="https://delcoding.github.io/images/posts/redhat/22.png" height="40%" />  
 </div>
 &emsp;&emsp;看到`?page=`就想到`php://filter`读取源码，使用：
+
 ```
 ?page=php://filter/convert.base64-encode/resource=index.php
 ```
+
 &emsp;&emsp;我们就能得到`index.php`的源码，接着我们再读取其他的文件。最后所有的文件如下：
+
 ```php
 <?php
 // index.php
