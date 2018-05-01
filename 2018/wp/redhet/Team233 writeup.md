@@ -253,9 +253,11 @@ pad之后得到的字符串
 >hint: tshark
 
 &emsp;&emsp;打开数据包后发现都是`tcp、http`的数据报文，这种报文还是比较好处理的，所以就用`wireshark`处理了，还好数据不多。我们直接导出他们之间的数据包看看，`wireshark`的操作：`文件` --> `导出对象` --> `HTTP`。
+
 <div align="center">
     <img src="https://delcoding.github.io/images/posts/redhat/1.png" height="60%" />  
 </div>
+
 &emsp;&emsp;这里让人感到奇怪的就是`?name=`后面的值都是`16`进制的，而且从服务器的响应报文来看，都没有什么实际的东西，所以一个想法就是这一串`16`进制可能藏着什么东西，所以我们把这些数据都提取出来，虽然提示了`tshark`，但奈何自己不会，所以下面就手工提取了。
 
 &emsp;&emsp;首先我们筛选出这些数据，使用：`tcp matches "GET"`就行，下拉到目标。
@@ -266,11 +268,13 @@ pad之后得到的字符串
 <div align="center">
     <img src="https://delcoding.github.io/images/posts/redhat/3.png" height="60%" />  
 </div>
+
 &emsp;&emsp;提取的数据如下：
 
-```
+```python
 123404B03040A0001080000739C8C4B7B36E495200000001400000004000000666C616781CD460EB62015168D9E64B06FC1712365FDE5F987916DD8A52416E83FDE98FB504B01023F000A0001080000739C8C4B7B36E4952000000014000000040024000000000000002000000000000000666C61670A00200000000000010018000DB39B543D73D301A1ED91543D73D301F99066543D73D301504B0506000000000100010056000000420000000000
 ```
+
 
 &emsp;&emsp;我们把它以`16`进制写入文件，我这是用`python`写入的：
 
