@@ -6,7 +6,7 @@
 
 
 
-拿到代码（代码扔最后了），粗略一看，嗯首先有个len为38的flag，另这个flag为`origin_flag`，然后然后flag通过pad（）函数，即`flag = pad(origin_flag)`，之后能让你选择：
+拿到代码，粗略一看，嗯首先有个len为38的flag，另这个flag为`origin_flag`，然后然后flag通过pad（）函数，即`flag = pad(origin_flag)`，之后能让你选择：
 1.unpad（flag） ->flag = unpad(flag)+ raw_input ，其中后者是我们输入的字符串，长度不能超过256-38=218
 
 然后很简单就能验证`unpad(pad(flag)) == flag`
